@@ -42,12 +42,12 @@ export default function ThemeCustomizer() {
                         <label className="py-1 px-2 fs-8 fw-bold text-uppercase text-muted text-spacing-2 bg-white border border-gray-2 position-absolute rounded-2 options-label" style="top: -12px">Skins</label>
                         <div className="row g-2 theme-options-items app-skin" id="appSkinList">
                             <div className="col-6 text-center position-relative single-option light-button active">
-                                <input type="radio" className="btn-check" id="app-skin-light" name="app-skin" value="1" data-app-skin="app-skin-light" />
-                                <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" for="app-skin-light">Light</label>
+                                <input type="radio" className="btn-check" id="LightTheme" name="app-skin" value="1" data-app-skin="LightTheme" />
+                                <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" for="LightTheme">Light</label>
                             </div>
                             <div className="col-6 text-center position-relative single-option dark-button">
-                                <input type="radio" className="btn-check" id="app-skin-dark" name="app-skin" value="2" data-app-skin="app-skin-dark" />
-                                <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" for="app-skin-dark">Dark</label>
+                                <input type="radio" className="btn-check" id="darkTheme" name="app-skin" value="2" data-app-skin="darkTheme" />
+                                <label className="py-2 fs-9 fw-bold text-dark text-uppercase text-spacing-1 border border-gray-2 w-100 h-100 c-pointer position-relative options-label" for="darkTheme">Dark</label>
                             </div>
                         </div>
                     </div>

@@ -21,8 +21,33 @@ export default function Sidebar() {
                             </Link>
                         </li>
                         <li className="nxl-item nxl-hasmenu">
+                            <Link to="/questions" className="nxl-link">
+                                <span className="nxl-micon"><i className="feather-help-circle"></i></span> <span className="nxl-mtext">Sorular</span>
+                            </Link>
+                        </li>
+                        <li className="nxl-item nxl-hasmenu">
                             <Link to="/users" className="nxl-link">
                                 <span className="nxl-micon"><i className="feather-users"></i></span> <span className="nxl-mtext">Kullanıcılar</span>
+                            </Link>
+                        </li>
+                        <li className="nxl-item nxl-hasmenu">
+                            <Link to="/users" className="nxl-link">
+                                <span className="nxl-micon"><i className="feather-archive"></i></span> <span className="nxl-mtext">Ürün Yönetimi</span>
+                            </Link>
+                        </li>
+                        <li className="nxl-item nxl-hasmenu">
+                            <Link to="/users" className="nxl-link">
+                                <span className="nxl-micon"><i className="feather-shopping-bag"></i></span> <span className="nxl-mtext">Sipariş Yönetimi</span>
+                            </Link>
+                        </li>
+                        <li className="nxl-item nxl-hasmenu">
+                            <Link to="/users" className="nxl-link">
+                                <span className="nxl-micon"><i className="feather-activity"></i></span> <span className="nxl-mtext">Destek Portalı</span>
+                            </Link>
+                        </li>
+                        <li className="nxl-item nxl-hasmenu">
+                            <Link to="/users" className="nxl-link">
+                                <span className="nxl-micon"><i className="feather-bell"></i></span> <span className="nxl-mtext">Bildirim Sistemi</span>
                             </Link>
                         </li>
                     </ul>

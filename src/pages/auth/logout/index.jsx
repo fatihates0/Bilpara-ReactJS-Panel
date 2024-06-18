@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setUser } from '~/redux/slices/authSlice';
 
 export default function Logout() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(setUser(false))
         // Çıkış işlemleri burada yapılır
         console.log("Çıkış işlemleri yapıldı.");
         

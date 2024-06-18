@@ -1,6 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react';
 
 export default function Home() {
+    
+    useEffect(() => {
+        document.title = 'Anasayfa | '+import.meta.env.VITE_PROJECT_NAME;
+    }, []);
+
     return (
         <>
             <main className="nxl-container">
@@ -33,7 +39,7 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className="main-content"><div className="row"></div></div>
+                    <div className="main-content"><div className="row">{import.meta.env.VITE_API_URL}</div></div>
                 </div>
             </main>
         </>

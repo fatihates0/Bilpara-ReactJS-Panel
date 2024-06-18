@@ -1,13 +1,9 @@
-import axios from 'axios';
-import moment from 'moment';
 import React from 'react'
-import { useState } from 'react';
 import { useEffect } from 'react';
-import DataTable, { createTheme } from 'react-data-table-component';
-import { useDispatch } from 'react-redux';
+import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { setLoading } from '~/redux/slices/generalSlice';
 
 const TextField = styled.input`
     height: 36px;
@@ -25,68 +21,18 @@ const TextField = styled.input`
     }
 `;
 
-createTheme(
-    'darkTheme',
-    {
-        text: {
-            primary: '#b1b4c0',
-            secondary: '#2aa198',
-        },
-        background: {
-            default: '#0f172a',
-        },
-        context: {
-            background: '#cb4b16',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#073642',
-        },
-        button: {
-            default: '#2aa198',
-            hover: 'rgba(0,0,0,.08)',
-            focus: 'rgba(255,255,255,.12)',
-            disabled: 'rgba(255, 255, 255, .34)',
-        },
-        sortFocus: {
-            default: '#2aa198',
-        },
-        highlightOnHover: {
-            background: 'rgba(18, 26, 45, 1)'
-        }
-    },
-    'dark',
-);
-
-createTheme(
-    'lightTheme',
-    {
-        text: {
-            primary: '#ff0000',
-            secondary: '#ff0000',
-        },
-        background: {
-            default: '#ff0000',
-        },
-        context: {
-            background: '#ff0000',
-            text: '#FFFFFF',
-        },
-        divider: {
-            default: '#ff0000',
-        },
-        button: {
-            default: '#ff0000',
-            hover: 'rgba(0,0,0,.08)',
-            focus: 'rgba(255,255,255,.12)',
-            disabled: 'rgba(255, 255, 255, .34)',
-        },
-        sortFocus: {
-            default: '#ff0000',
-        }
-    },
-    'light',
-);
+const ClearButton = styled.button`
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 34px;
+    width: 32px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
@@ -105,7 +51,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 
 
 
-/*const columns = [
+const columns = [
     {
         name: 'ID',
         selector: row => row.id,
@@ -131,149 +77,47 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
             </div>
         ),
     },
-];*/
+];
 
-const columns = [
-    {
-        name: 'ID',
-        selector: row => row.invitation_code,
-        grow: 0.3,
-    },
-    {
-        name: 'Name Surname',
-        selector: row => row.name,
-        right: false,
-        grow: 0.5
-    },
-    {
-        name: 'Email',
-        selector: row => row.email,
-        grow: 0.8
-    },
-    /*{
-        name: 'BilPara Puan',
-        selector: row => row.paraPuan,
-        grow:0.1,
-        conditionalCellStyles: [
-            {
-                when: row => row.paraPuan < 5,
-                style: {
-                    textAlign: 'center',
-                    backgroundColor: 'rgba(63, 195, 128, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                },
-            },
-            {
-                when: row => row.paraPuan >= 5 && row.paraPuan < 45,
-                style: {
-                    backgroundColor: 'rgba(248, 148, 6, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                },
-            },
-            {
-                when: row => row.paraPuan >= 45,
-                style: {
-                    backgroundColor: 'rgba(242, 38, 19, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'not-allowed',
-                    },
-                },
-            },
-        ],
-    },*/
-    {
-        name: 'Provider',
-        grow: 0.3,
-        selector: row => row.provider,
-    },
-    {
-        name: 'BilPara Puan',
-        selector: row => row.paraPuan,
-        grow: 0.2,
-        sortable: true,
-    },
-    {
-        name: 'Kayıt Tarihi',
-        selector: row => moment(row.created_at).format('DD/MM/YYYY HH:mm'),
-        grow: 0.25,
-        sortable: true,
-    },
-    {
-        name: 'Edit',
-        right: true,
-        selector: row => (
-            <div className="hstack gap-2 justify-content-end">
-                <Link to={"/questions/" + row.invitation_code} className="avatar-text avatar-md"><i className="feather feather-eye"></i></Link>
-                <a href="leads-view.html" className="avatar-text avatar-md">
-                    <i className="feather feather-edit"></i>
-                </a>
-            </div>
-        ),
-    },
+const data = [
+    { id: 1, title: 'Beetlejuice', year: '1988' },
+    { id: 2, title: 'Ghostbusters', year: '1984' },
+    { id: 3, title: 'Back to the Future', year: '1985' },
+    { id: 4, title: 'The Goonies', year: '1985' },
+    { id: 5, title: 'E.T. the Extra-Terrestrial', year: '1982' },
+    { id: 6, title: 'Indiana Jones and the Last Crusade', year: '1989' },
+    { id: 7, title: 'Die Hard', year: '1988' },
+    { id: 8, title: 'Aliens', year: '1986' },
+    { id: 9, title: 'Blade Runner', year: '1982' },
+    { id: 10, title: 'The Terminator', year: '1984' },
+    { id: 11, title: 'Predator', year: '1987' },
+    { id: 12, title: 'RoboCop', year: '1987' },
+    { id: 13, title: 'Top Gun', year: '1986' },
+    { id: 14, title: 'The Breakfast Club', year: '1985' },
+    { id: 15, title: 'Ferris Bueller\'s Day Off', year: '1986' },
+    { id: 16, title: 'The Princess Bride', year: '1987' },
+    { id: 17, title: 'Stand by Me', year: '1986' },
+    { id: 18, title: 'Labyrinth', year: '1986' },
+    { id: 19, title: 'The NeverEnding Story', year: '1984' },
+    { id: 20, title: 'The Karate Kid', year: '1984' },
+    { id: 21, title: 'Gremlins', year: '1984' },
+    { id: 22, title: 'WarGames', year: '1983' },
+    { id: 23, title: 'The Lost Boys', year: '1987' },
+    { id: 24, title: 'Rain Man', year: '1988' },
+    { id: 25, title: 'Big', year: '1988' }
 ];
 
 export default function Users() {
 
-    const [theme, setTheme] = useState(null);
-    const [tabloData, setTabloData] = useState(null);
-    const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(setLoading(true));
-        document.title = 'Kullanıcılar | ' + import.meta.env.VITE_PROJECT_NAME;
-        setTheme(localStorage.getItem('darkTheme'))
-        console.log(localStorage.getItem('darkTheme'));
+        document.title = 'Kullanıcılar | '+import.meta.env.VITE_PROJECT_NAME;
     }, []);
-
-    useEffect(() => {
-        const fun = async function () {
-            /*await axios.post(import.meta.env.VITE_API_URL + "/admin/users", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then((res) => setTabloData(res.data.sorular));
-            dispatch(setLoading(false));*/
-
-
-            try {
-                const token = localStorage.getItem('token');
-                console.log(token);
-
-                const res = await axios.post(import.meta.env.VITE_API_URL + "/admin/users", {}, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setTabloData(res.data.users)
-
-                console.log(res);
-
-                dispatch(setLoading(false))
-
-            } catch (error) {
-                console.log(error);
-                dispatch(setLoading(false))
-            }
-
-
-
-
-        }
-        fun();
-    }, [])
 
     const [filterText, setFilterText] = React.useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
-
+    const filteredItems = data.filter(
+        item => item.title && item.title.toLowerCase().includes(filterText.toLowerCase()),
+    );
 
     const subHeaderComponentMemo = React.useMemo(() => {
         const handleClear = () => {
@@ -287,56 +131,6 @@ export default function Users() {
             <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
         );
     }, [filterText, resetPaginationToggle]);
-
-    if (theme == null) {
-        return (
-            <div>Selam</div>
-        )
-    }
-    if (tabloData == null) {
-        return (
-            <div>Selam</div>
-        )
-    }
-
-
-    const filteredItems = tabloData.filter(item =>
-        (item.name && item.name.toLowerCase().includes(filterText.toLowerCase())) ||
-        (item.invitation_code && item.invitation_code.toLowerCase().includes(filterText.toLowerCase()))
-    );
-
-    const customStyles = {
-        rows: {
-            style: {
-                minHeight: '50px', // override the row height
-            },
-        },
-        headCells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for head cells
-                paddingRight: '8px',
-            },
-        },
-        headRow: {
-            style: {
-                color: 'red'
-            },
-        },
-        cells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for data cells
-                paddingRight: '8px',
-            },
-        },
-    };
-
-    const handleRowClicked = row => {
-
-        console.log(`${row.invitation_code} was clicked!`);
-    };
-
-
-
 
 
     return (
@@ -552,7 +346,7 @@ export default function Users() {
                                         <div className="table-responsive">
                                             <DataTable
                                                 title="Kullanıcı Listesi"
-                                                theme={theme}
+                                                theme='light'
                                                 columns={columns}
                                                 data={filteredItems}
                                                 pagination
@@ -561,10 +355,6 @@ export default function Users() {
                                                 subHeaderComponent={subHeaderComponentMemo}
                                                 selectableRows
                                                 persistTableHead
-                                                customStyles={customStyles}
-                                                highlightOnHover
-                                                onRowClicked={handleRowClicked}
-                                                noDataComponent="Veri yok!"
                                             />
                                         </div>
                                     </div>

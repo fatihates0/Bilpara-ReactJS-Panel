@@ -1,7 +1,16 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export default function Header() {
+
+    const { user } = useSelector((state)=>state.auth);
+
+    useEffect(()=>{
+        console.log(user);
+    },[])
+
     return (
         <header className="nxl-header">
             <div className="header-wrapper">
@@ -12,7 +21,7 @@ export default function Header() {
                         </div>
                     </a>
                     <div className="nxl-navigation-toggle">
-                        <a href="#" id="menu-mini-button"> <i className="feather-align-left"></i> </a> <a href="#" id="menu-expend-button" style={{display:'none'}}> <i className="feather-arrow-right"></i> </a>
+                        <a href="#" id="menu-mini-button"> <i className="feather-align-left"></i> </a> <a href="#" id="menu-expend-button" style={{ display: 'none' }}> <i className="feather-arrow-right"></i> </a>
                     </div>
                     <div className="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
                         <a href="#" id="nxl-lavel-mega-menu-open"> <i className="feather-align-left"></i> </a>
@@ -43,44 +52,6 @@ export default function Header() {
                                 </div>
                             </div>
                         </div>
-                        <div className="dropdown nxl-h-item nxl-header-language d-none d-sm-flex">
-                            <a href="#" className="nxl-head-link me-0 nxl-language-link" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                                <img src="assets/vendors/img/flags/4x3/us.svg" alt="" className="img-fluid wd-20" />
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-language-dropdown">
-                                <div className="dropdown-divider mt-0"></div>
-                                <div className="language-items-wrapper">
-                                    <div className="select-language px-4 py-2 hstack justify-content-between gap-4">
-                                        <div className="lh-lg">
-                                            <h6 className="mb-0">Select Language</h6>
-                                            <p className="fs-11 text-muted mb-0">3 languages avaiable!</p>
-                                        </div>
-                                        <a href="#" className="avatar-text avatar-md" data-bs-toggle="tooltip" title="Add Language"> <i className="feather-plus"></i> </a>
-                                    </div>
-                                    <div className="dropdown-divider"></div>
-                                    <div className="row px-4 pt-3">
-                                        <div className="col-sm-4 col-6 language_select active">
-                                            <a href="#" className="d-flex align-items-center gap-2">
-                                                <div className="avatar-image avatar-sm"><img src="assets/vendors/img/flags/1x1/us.svg" alt="" className="img-fluid" /></div>
-                                                <span>English</span>
-                                            </a>
-                                        </div>
-                                        <div className="col-sm-4 col-6 language_select">
-                                            <a href="#" className="d-flex align-items-center gap-2">
-                                                <div className="avatar-image avatar-sm"><img src="assets/vendors/img/flags/1x1/de.svg" alt="" className="img-fluid" /></div>
-                                                <span>German</span>
-                                            </a>
-                                        </div>
-                                        <div className="col-sm-4 col-6 language_select">
-                                            <a href="#" className="d-flex align-items-center gap-2">
-                                                <div className="avatar-image avatar-sm"><img src="assets/vendors/img/flags/1x1/tr.svg" alt="" className="img-fluid" /></div>
-                                                <span>Turkish</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div className="nxl-h-item d-none d-sm-flex">
                             <div className="full-screen-switcher">
                                 <a href="#" className="nxl-head-link me-0" onClick={() => $('body').fullScreenHelper('toggle')}>
@@ -91,7 +62,7 @@ export default function Header() {
                         </div>
                         <div className="nxl-h-item dark-light-theme">
                             <a href="#" className="nxl-head-link me-0 dark-button"> <i className="feather-moon"></i> </a>
-                            <a href="#" className="nxl-head-link me-0 light-button" style={{display:'none'}}> <i className="feather-sun"></i> </a>
+                            <a href="#" className="nxl-head-link me-0 light-button" style={{ display: 'none' }}> <i className="feather-sun"></i> </a>
                         </div>
                         <div className="dropdown nxl-h-item">
                             <a className="nxl-head-link me-3" data-bs-toggle="dropdown" href="#" role="button" data-bs-auto-close="outside"> <i className="feather-bell"></i> <span className="badge bg-danger nxl-h-badge">1</span> </a>
@@ -123,8 +94,8 @@ export default function Header() {
                                     <div className="d-flex align-items-center">
                                         <img src="assets/images/avatar/1.png" alt="user-image" className="img-fluid user-avtar" />
                                         <div>
-                                            <h6 className="text-dark mb-0">Alexandra Della</h6>
-                                            <span className="fs-12 fw-medium text-muted">alex.della@outlook.com</span>
+                                            <h6 className="text-dark mb-0">{user.name}</h6>
+                                            <span className="fs-12 fw-medium text-muted">{user.email}</span>
                                         </div>
                                     </div>
                                 </div>
