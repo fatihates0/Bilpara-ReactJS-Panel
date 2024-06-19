@@ -229,7 +229,6 @@ export default function Users() {
         dispatch(setLoading(true));
         document.title = 'Kullanıcılar | ' + import.meta.env.VITE_PROJECT_NAME;
         setTheme(localStorage.getItem('darkTheme'))
-        console.log(localStorage.getItem('darkTheme'));
     }, []);
 
     useEffect(() => {
@@ -245,7 +244,6 @@ export default function Users() {
 
             try {
                 const token = localStorage.getItem('token');
-                console.log(token);
 
                 const res = await axios.post(import.meta.env.VITE_API_URL + "/admin/users", {}, {
                     headers: {
@@ -254,8 +252,6 @@ export default function Users() {
                 });
 
                 setTabloData(res.data.users)
-
-                console.log(res);
 
                 dispatch(setLoading(false))
 
@@ -302,7 +298,8 @@ export default function Users() {
 
     const filteredItems = tabloData.filter(item =>
         (item.name && item.name.toLowerCase().includes(filterText.toLowerCase())) ||
-        (item.invitation_code && item.invitation_code.toLowerCase().includes(filterText.toLowerCase()))
+        (item.invitation_code && item.invitation_code.toLowerCase().includes(filterText.toLowerCase())) ||
+        (item.email && item.email.toLowerCase().includes(filterText.toLowerCase()))
     );
 
     const customStyles = {
@@ -334,10 +331,6 @@ export default function Users() {
 
         console.log(`${row.invitation_code} was clicked!`);
     };
-
-
-
-
 
     return (
         <>

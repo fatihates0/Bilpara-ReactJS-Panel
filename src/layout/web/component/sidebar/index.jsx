@@ -46,7 +46,7 @@ export default function Sidebar() {
                             </Link>
                         </li>
                         <li className="nxl-item nxl-hasmenu">
-                            <Link to="/users" className="nxl-link">
+                            <Link to="/notifications" className="nxl-link">
                                 <span className="nxl-micon"><i className="feather-bell"></i></span> <span className="nxl-mtext">Bildirim Sistemi</span>
                             </Link>
                         </li>

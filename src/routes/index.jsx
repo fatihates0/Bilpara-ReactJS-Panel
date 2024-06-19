@@ -7,6 +7,7 @@ import Login from "~/pages/auth/login";
 import Logout from "~/pages/auth/logout";
 import PrivateRoot from "~/pages/auth/privateRoot";
 import Home from "~/pages/home";
+import Notifications from "~/pages/notification";
 import Sorular from "~/pages/questions";
 import Users from "~/pages/users";
 
@@ -28,6 +29,7 @@ export default function GeneralRoute() {
                     <Route path="users" element={<Users />} />
                     <Route path="questions" element={<Sorular />} />
                     <Route path="questions/:search_key/:page?/:page_size?" element={<Sorular />} />
+                    <Route path="notifications" element={<Notifications />} />
                 </Route>
                 <Route path="/auth">
                     <Route index={true} element={<Login />} />
