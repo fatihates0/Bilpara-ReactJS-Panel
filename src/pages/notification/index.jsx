@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { setLoading } from '~/redux/slices/generalSlice';
+import TruncatedText from './truncateText';
 
 export default function Notifications() {
 
@@ -11,12 +12,21 @@ export default function Notifications() {
     const [title, setTitle] = useState("Bilpara");
     const [body, setBody] = useState("");
     const [topic, setTopic] = useState("allDevices");
-    const [token, setToken] = useState("");
+    const [deviceToken, setDeviceToken] = useState("");
+    const [isHovered, setIsHovered] = useState(false);
     const [notificationModel, setNotificationModel] = useState("topic");
     const [notifications, setNotifications] = useState([]);
     const [filteredNotifications, setFilteredNotifications] = useState(null);
     const [filter, setFilter] = useState('allDevices');
     const dispatch = useDispatch();
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
 
     useEffect(() => {
         dispatch(setLoading(true));
@@ -89,31 +99,35 @@ export default function Notifications() {
                         Authorization: `Bearer ${token}`
                     }
                 });
+
+                if (res.data.status == true) {
+                    successComp(`Bildirim "${topic}" topiğine kayıtlı cihazlara gönderildi.`);
+                }
             } else {
-                res = await axios.post(import.meta.env.VITE_API_URL + '/admin/notifications/sendTopic', {
+                res = await axios.post(import.meta.env.VITE_API_URL + '/admin/notifications/sendToken', {
                     messages: {
                         title,
                         body
                     },
-                    deviceToken: token
+                    deviceToken
                 }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
+
+                if (res.data.status == true) {
+                    successComp(`Bildirim "${deviceToken.slice(0, 10)}..." tokenı kayıtlı cihaza gönderildi.`);
+                }
             }
 
 
-            console.log(res.data);
 
-            if (res.data.status == true) {
-                successComp(`Bildirim "${topic}" topiğine kayıtlı cihazlara gönderildi.`);
-            }
 
             setTitle("Bilpara")
             setBody("")
             setTopic("allDevices")
-            setToken("")
+            setDeviceToken("")
             getNotifications();
             dispatch(setLoading(true))
         } catch (error) {
@@ -211,20 +225,30 @@ export default function Notifications() {
                                                                     <a href="#" className="single-task-list-link" data-bs-toggle="offcanvas" data-bs-target="#tasksDetailsOffcanvas">
                                                                         <div className="fs-13 fw-bold text-truncate-1-line">{item.title}
                                                                             {
-                                                                                item.topic === 'allDevices' && (
-                                                                                    <span className="ms-2 badge bg-soft-danger text-success">{item.topic}</span>
+                                                                                item.topic.length > 20 ? (
+                                                                                    <TruncatedText alert={successComp} text={item.topic} maxLength={15} />
+                                                                                ) : (
+                                                                                    <>
+                                                                                        {item.topic === 'allDevices' && (
+                                                                                            <span className="ms-2 badge bg-soft-danger text-success">
+                                                                                                {item.topic}
+                                                                                            </span>
+                                                                                        )}
+                                                                                        {item.topic === 'iosDevices' && (
+                                                                                            <span className="ms-2 badge bg-soft-danger text-warning">
+                                                                                                {item.topic}
+                                                                                            </span>
+                                                                                        )}
+                                                                                        {item.topic === 'androidDevices' && (
+                                                                                            <span className="ms-2 badge bg-soft-danger text-primary">
+                                                                                                {item.topic}
+                                                                                            </span>
+                                                                                        )}
+                                                                                    </>
                                                                                 )
                                                                             }
-                                                                            {
-                                                                                item.topic === 'iosDevices' && (
-                                                                                    <span className="ms-2 badge bg-soft-danger text-warning">{item.topic}</span>
-                                                                                )
-                                                                            }
-                                                                            {
-                                                                                item.topic === 'androidDevices' && (
-                                                                                    <span className="ms-2 badge bg-soft-danger text-primary">{item.topic}</span>
-                                                                                )
-                                                                            }
+
+
                                                                         </div>
                                                                         <div className="fs-12 fw-normal text-muted text-truncate-1-line">{item.body}</div>
                                                                     </a>
@@ -331,7 +355,7 @@ export default function Notifications() {
                                                     <div className="col-md-12">
                                                         <div className="note-title">
                                                             <label className="form-label">Kullanıcı Tokenı</label>
-                                                            <input value={token} onChange={event => { setToken(event.target.value) }} type="text" id="note-has-title" className="form-control" min="25" placeholder="Token" />
+                                                            <input value={deviceToken} onChange={event => { setDeviceToken(event.target.value) }} type="text" id="note-has-title" className="form-control" min="25" placeholder="Token" />
                                                         </div>
                                                     </div>
                                                 </div>
