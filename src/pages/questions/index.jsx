@@ -114,7 +114,7 @@ export default function Sorular() {
                             <div className="content-sidebar-header">
                                 <a href="#" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i className="feather-plus me-2"></i>
-                                    <span>Add Question</span>
+                                    <span>Soru Ekle</span>
                                 </a>
                             </div>
                             <div className="content-sidebar-body">
@@ -246,7 +246,7 @@ export default function Sorular() {
                 <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="modalTitleId">Add Notes</h5>
+                            <h5 className="modal-title" id="modalTitleId">Soru Ekle</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
