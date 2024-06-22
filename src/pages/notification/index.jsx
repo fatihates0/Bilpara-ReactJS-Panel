@@ -71,6 +71,7 @@ export default function Notifications() {
     const alertComp = (message) => toast.warn(message, { position: "bottom-right", });
 
     const handleSubmit = async () => {
+        dispatch(setLoading(true))
         try {
             const token = localStorage.getItem('token');
 
@@ -114,9 +115,11 @@ export default function Notifications() {
             setTopic("allDevices")
             setToken("")
             getNotifications();
+            dispatch(setLoading(true))
         } catch (error) {
             console.error(error);
             alertComp(error.message);
+            dispatch(setLoading(true))
         }
     }
 
