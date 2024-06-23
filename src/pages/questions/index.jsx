@@ -47,7 +47,7 @@ export default function Sorular() {
         fetchQuestions()
     };
 
-    const fetchQuestions = async (url = null,newFilter = filter) => {
+    const fetchQuestions = async (url = null, newFilter = filter) => {
 
         let activePage = page ? page : "0";
         let pageSize = page_size ? page_size : "9";
@@ -56,7 +56,13 @@ export default function Sorular() {
         dispatch(setLoading(true));
         try {
             // API çağrısı yaparak soruları al
-            const response = await axios.post(url ? url + '&status_filter=' + newFilter : import.meta.env.VITE_API_URL + '/getQuestions?search_key=' + aranacakKelime + '&page=' + activePage + '&page_size=' + pageSize + '&status_filter=' + newFilter);
+            const token = localStorage.getItem('token');
+
+            const response = await axios.post(url ? url + '&status_filter=' + newFilter : import.meta.env.VITE_API_URL + '/admin/questions?search_key=' + aranacakKelime + '&page=' + activePage + '&page_size=' + pageSize + '&status_filter=' + newFilter, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
             if (response.data.links.next) {
                 setNextLink(response.data.links.next + '&search_key=' + aranacakKelime + '&page_size=' + pageSize);
@@ -71,6 +77,7 @@ export default function Sorular() {
             }
 
             const data = response.data.data;
+
             setQuestions(data);
             setFilteredQuestions(data);
         } catch (error) {
@@ -91,11 +98,33 @@ export default function Sorular() {
 
     const handleFilterChange = (newFilter) => {
         setFilter(newFilter);
-        fetchQuestions(null,newFilter);
+        fetchQuestions(null, newFilter);
     };
 
     const handleApprowedQuestion = async (questionId) => {
         console.log(questionId);
+    }
+
+    const questionChangeStatus = async (id, status) => {
+        console.log(id);
+        const token = localStorage.getItem('token');
+
+        const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/questions/approve', {
+            question_id: id,
+            question_status: status
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (res.data.status == true) {
+            const updatedData = questions.map(item =>
+                item.id === id ? { ...item, status: status } : item
+            );
+            setQuestions(updatedData);
+        }
+
     }
 
 
@@ -206,13 +235,51 @@ export default function Sorular() {
                                                 <h5 className="note-title w-75 mb-1">{question.soru} <i className="point bi bi-circle-fill ms-1 fs-7"></i></h5>
                                                 <p className="fs-11 text-muted note-date">{moment(question.updated_at).format('DD/MM/YYYY HH:mm')}</p>
                                                 <div className="note-content flex-grow-1">
-                                                    <p className="text-muted note-inner-content text-truncate-3-line">{question.seceneka}</p>
-                                                    <p className="text-muted note-inner-content text-truncate-3-line">{question.secenekb}</p>
-                                                    <p className="text-muted note-inner-content text-truncate-3-line">{question.secenekc}</p>
-                                                    <p className="text-muted note-inner-content text-truncate-3-line">{question.secenekd}</p>
+                                                    <p className="text-muted note-inner-content text-truncate-3-line">A) {question.seceneka}</p>
+                                                    <p className="text-muted note-inner-content text-truncate-3-line">B) {question.secenekb}</p>
+                                                    <p className="text-muted note-inner-content text-truncate-3-line">C) {question.secenekc}</p>
+                                                    <p className="text-muted note-inner-content text-truncate-3-line">D) {question.secenekd}</p>
+                                                    <p className="text-muted note-inner-content text-truncate-3-line"><strong className='text-light'>Doğru Cevap:</strong> {question.dogru_cevap}</p>
                                                 </div>
                                                 <div className="d-flex align-items-center gap-1">
-                                                    <span onClick={() => console.log("Tiklandi", question.questionId)} className="avatar-text avatar-sm"><i className="feather-check-circle"></i></span>
+                                                    {
+                                                        question.status == 0 && (
+                                                            <>
+                                                                <span onClick={() => questionChangeStatus(question.id, 1)} className="avatar-text avatar-md bg-success">
+                                                                    <i style={{ fontSize: 18, marginTop: 0, marginLeft: -1 }} className="feather-check-circle text-white"></i>
+                                                                </span>
+                                                                <span onClick={() => questionChangeStatus(question.id, 2)} className="avatar-text avatar-md bg-danger">
+                                                                    <i style={{ fontSize: 20, marginTop: -2, marginLeft: -1 }} className="feather-x-circle text-white"></i>
+                                                                </span>
+                                                            </>
+                                                        )
+                                                    }
+                                                    {
+                                                        question.status == 1 && (
+                                                            <>
+                                                                <span onClick={() => questionChangeStatus(question.id, 2)} className="avatar-text avatar-md bg-danger">
+                                                                    <i style={{ fontSize: 20, marginTop: -2, marginLeft: -1 }} className="feather-x-circle text-white"></i>
+                                                                </span>
+                                                                <span onClick={() => questionChangeStatus(question.id, 0)} className="avatar-text avatar-md bg-primary">
+                                                                    <i style={{ fontSize: 18, marginTop: 0, marginLeft: 0 }} className="feather-archive text-white"></i>
+                                                                </span>
+                                                            </>
+                                                        )
+                                                    }
+                                                    {
+                                                        question.status == 2 && (
+                                                            <>
+                                                                <span onClick={() => questionChangeStatus(question.id, 1)} className="avatar-text avatar-md bg-success">
+                                                                <i style={{ fontSize: 18, marginTop: 0, marginLeft: -1 }} className="feather-check-circle text-white"></i>
+                                                                </span>
+                                                                <span onClick={() => questionChangeStatus(question.id, 0)} className="avatar-text avatar-md bg-primary">
+                                                                    <i style={{ fontSize: 18, marginTop: 0, marginLeft: 0 }} className="feather-archive text-white"></i>
+                                                                </span>
+                                                            </>
+                                                        )
+                                                    }
+
+
                                                     <div className="ms-auto">
                                                         <div className="dropdown btn-group category-selector">
                                                             <a className="nav-link dropdown-toggle category-dropdown label-group p-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
