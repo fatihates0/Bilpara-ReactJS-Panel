@@ -106,7 +106,7 @@ export default function Sorular() {
     }
 
     const questionChangeStatus = async (id, status) => {
-        console.log(id);
+        
         const token = localStorage.getItem('token');
 
         const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/questions/changeStatus', {
@@ -270,7 +270,7 @@ export default function Sorular() {
                                                         question.status == 2 && (
                                                             <>
                                                                 <span onClick={() => questionChangeStatus(question.id, 1)} className="avatar-text avatar-md bg-success">
-                                                                <i style={{ fontSize: 18, marginTop: 0, marginLeft: -1 }} className="feather-check-circle text-white"></i>
+                                                                    <i style={{ fontSize: 18, marginTop: 0, marginLeft: -1 }} className="feather-check-circle text-white"></i>
                                                                 </span>
                                                                 <span onClick={() => questionChangeStatus(question.id, 0)} className="avatar-text avatar-md bg-primary">
                                                                     <i style={{ fontSize: 18, marginTop: 0, marginLeft: 0 }} className="feather-archive text-white"></i>
