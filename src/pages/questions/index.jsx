@@ -3,7 +3,6 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { setLoading } from '~/redux/slices/generalSlice';
@@ -101,12 +100,8 @@ export default function Sorular() {
         fetchQuestions(null, newFilter);
     };
 
-    const handleApprowedQuestion = async (questionId) => {
-        console.log(questionId);
-    }
-
     const questionChangeStatus = async (id, status) => {
-        
+
         const token = localStorage.getItem('token');
 
         const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/questions/changeStatus', {

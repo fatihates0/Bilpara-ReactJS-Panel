@@ -210,7 +210,7 @@ const columns = [
         right: true,
         selector: row => (
             <div className="hstack gap-2 justify-content-end">
-                <Link to={"/questions/" + row.invitation_code} className="avatar-text avatar-md"><i className="feather feather-eye"></i></Link>
+                <Link to={"/users/" + row.invitation_code} className="avatar-text avatar-md"><i className="feather feather-eye"></i></Link>
                 <a href="leads-view.html" className="avatar-text avatar-md">
                     <i className="feather feather-edit"></i>
                 </a>
