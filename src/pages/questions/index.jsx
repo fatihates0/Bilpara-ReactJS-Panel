@@ -109,7 +109,7 @@ export default function Sorular() {
         console.log(id);
         const token = localStorage.getItem('token');
 
-        const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/questions/approve', {
+        const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/questions/changeStatus', {
             question_id: id,
             question_status: status
         }, {
