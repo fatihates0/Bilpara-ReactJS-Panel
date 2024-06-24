@@ -195,127 +195,20 @@ export default function UserDetail() {
                                                 <a href="#" className="btn btn-sm btn-light-brand">View Alls</a>
                                             </div>
                                             <ul className="list-unstyled activity-feed">
-                                                <li className="d-flex justify-content-between feed-item feed-item-success">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">Reynante placed new order <span className="date">[April 19, 2023]</span></span>
-                                                        <span className="text">New order placed <a href="#" className="fw-bold text-primary">#456987</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-info">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">5+ friends join this group <span className="date">[April 20, 2023]</span></span>
-                                                        <span className="text">Joined the group <a href="#" className="fw-bold text-primary">"Duralux"</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-secondary">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">Socrates send you friend request <span className="date">[April 21, 2023]</span></span>
-                                                        <span className="text">New friend request <a href="#" className="badge bg-soft-success text-success ms-1">Conform</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-warning">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">Reynante make deposit $565 USD <span className="date">[April 22, 2023]</span></span>
-                                                        <span className="text">Make deposit <a href="#" className="fw-bold text-primary">$565 USD</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-primary">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">New event are coming soon <span className="date">[April 23, 2023]</span></span>
-                                                        <span className="text">Attending the event <a href="#" className="fw-bold text-primary">"Duralux Event"</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-info">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">5+ friends join this group <span className="date">[April 20, 2023]</span></span>
-                                                        <span className="text">Joined the group <a href="#" className="fw-bold text-primary">"Duralux"</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-danger">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">New meeting joining are pending <span className="date">[April 23, 2023]</span></span>
-                                                        <span className="text">Duralux meeting <a href="#" className="badge bg-soft-warning text-warning ms-1">Join</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-info">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">5+ friends join this group <span className="date">[April 20, 2023]</span></span>
-                                                        <span className="text">Joined the group <a href="#" className="fw-bold text-primary">"Duralux"</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-secondary">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">Socrates send you friend request <span className="date">[April 21, 2023]</span></span>
-                                                        <span className="text">New friend request <a href="#" className="badge bg-soft-success text-success ms-1">Conform</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-warning">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">Reynante make deposit $565 USD <span className="date">[April 22, 2023]</span></span>
-                                                        <span className="text">Make deposit <a href="#" className="fw-bold text-primary">$565 USD</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
-                                                <li className="d-flex justify-content-between feed-item feed-item-primary">
-                                                    <div>
-                                                        <span className="text-truncate-1-line lead_date">New event are coming soon <span className="date">[April 23, 2023]</span></span>
-                                                        <span className="text">Attending the event <a href="#" className="fw-bold text-primary">"Duralux Event"</a></span>
-                                                    </div>
-                                                    <div className="ms-3 d-flex gap-2 align-items-center">
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="Make Read"><i className="feather feather-check fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View Activity"><i className="feather feather-eye fs-12"></i></a>
-                                                        <a href="#" className="avatar-text avatar-sm" data-bs-toggle="tooltip" data-bs-trigger="hover" title="More Options"><i className="feather feather-more-vertical"></i></a>
-                                                    </div>
-                                                </li>
+                                                {
+                                                    userDetail.with_logs.map((item, index) => (
+                                                        <li key={index} className={`d-flex justify-content-between feed-item ${item.log.toLowerCase().includes('reklam') ? 'feed-item-warning' : 'feed-item-primary'}`}>
+                                                            <div>
+                                                                <span className="text-truncate-1-line lead_date">
+                                                                    <span className="date">[{moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}]</span>
+                                                                </span>
+                                                                <span className="text">{item.log} <a href="#" className="badge bg-soft-success text-success ms-1">{item.log.toLowerCase().includes('reklam') ? <strong className='text-warning'>Reklam </strong> : <strong className='text-primary'>Diğer </strong>} </a></span>
+                                                            </div>
+                                                        </li>
+                                                    ))
+                                                }
+
+
                                             </ul>
                                             <a href="#" className="d-flex align-items-center text-muted">
                                                 <i className="feather feather-more-horizontal fs-12"></i>
