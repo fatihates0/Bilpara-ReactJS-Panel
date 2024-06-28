@@ -1,8 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, } from "react-router-dom";
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import GeneralRoute from './routes';
 import { Provider } from 'react-redux';
