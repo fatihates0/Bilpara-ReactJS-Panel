@@ -19,7 +19,6 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
-    const { loading } = useSelector((state) => state.general);
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -70,20 +69,10 @@ export default function Login() {
                                     <div className="mb-4">
                                         <input type="email" className="form-control" placeholder="E-Posta" onChange={(event) => setEmail(event.target.value)} value={email} required />
                                     </div>
-                                    <div className="mb-3">
+                                    <div className="mb-4">
                                         <input type="password" className="form-control" placeholder="Şifre" onChange={(event) => setPassword(event.target.value)} value={password} required />
                                     </div>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <div className="custom-control custom-checkbox">
-                                                <input type="checkbox" className="custom-control-input" id="rememberMe" />
-                                                <label className="custom-control-label c-pointer" htmlFor="rememberMe">Remember Me</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="mt-5">
-                                        <button onClick={loginHandle} type="submit" className="btn btn-lg btn-primary w-100">Login</button>
-                                    </div>
+                                    <button onClick={loginHandle} type="submit" className="btn btn-lg btn-primary w-100">Giriş Yap</button>
                                 </form>
                             </div>
                         </div>
