@@ -7,6 +7,7 @@ import DataTable, { createTheme } from 'react-data-table-component';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PageHeading from '~/layout/web/component/pageHeading';
 import { setLoading } from '~/redux/slices/generalSlice';
 
 const TextField = styled.input`
@@ -207,13 +208,9 @@ const columns = [
     },
     {
         name: 'Edit',
-        right: true,
         selector: row => (
             <div className="hstack gap-2 justify-content-end">
                 <Link to={"/users/" + row.invitation_code} className="avatar-text avatar-md"><i className="feather feather-eye"></i></Link>
-                <a href="leads-view.html" className="avatar-text avatar-md">
-                    <i className="feather feather-edit"></i>
-                </a>
             </div>
         ),
     },
@@ -223,6 +220,9 @@ export default function Users() {
 
     const [theme, setTheme] = useState(null);
     const [tabloData, setTabloData] = useState(null);
+    const [aktifUye, setAktifUye] = useState(0);
+    const [pasifUye, setPasifUye] = useState(0);
+    const [sonHaftaKayitlari, setSetsonHaftaKayitlari] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -231,16 +231,9 @@ export default function Users() {
         setTheme(localStorage.getItem('darkTheme'))
     }, []);
 
+
     useEffect(() => {
         const fun = async function () {
-            /*await axios.post(import.meta.env.VITE_API_URL + "/admin/users", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then((res) => setTabloData(res.data.sorular));
-            dispatch(setLoading(false));*/
-
 
             try {
                 const token = localStorage.getItem('token');
@@ -251,7 +244,24 @@ export default function Users() {
                     }
                 });
 
-                setTabloData(res.data.users)
+                console.log(res.data.users);
+
+                setTabloData(res.data.users);
+
+                const oneWeekAgo = await moment().subtract(1, 'weeks');
+
+                const sonHafta = await res.data.users.filter(item => {
+                    const createdAt = moment(item.created_at);
+                    return createdAt.isAfter(oneWeekAgo);
+                });
+
+                setSetsonHaftaKayitlari(sonHafta.length);
+
+                const aktifUye = res.data.users.filter(item => item.status === 1);
+
+                setAktifUye(aktifUye.length);
+
+                setPasifUye(res.data.users.length - aktifUye.length);
 
                 dispatch(setLoading(false))
 
@@ -337,15 +347,7 @@ export default function Users() {
             <main className="nxl-container">
                 <div className="nxl-content">
                     <div className="page-header">
-                        <div className="page-header-left d-flex align-items-center">
-                            <div className="page-header-title">
-                                <h5 className="m-b-10">Leads</h5>
-                            </div>
-                            <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li className="breadcrumb-item">Leads</li>
-                            </ul>
-                        </div>
+                        <PageHeading title="Kullanıcılar" />
                         <div className="page-header-right ms-auto">
                             <div className="page-header-right-items">
                                 <div className="d-flex d-md-none">
@@ -458,14 +460,10 @@ export default function Users() {
                                                     <div className="avatar-text avatar-xl rounded">
                                                         <i className="feather-users"></i>
                                                     </div>
-                                                    <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">Total Leads</span>
-                                                        <span className="fs-24 fw-bolder d-block">26,595</span>
+                                                    <a href="#" className="fw-bold d-block">
+                                                        <span className="d-block">Toplam Üye</span>
+                                                        <span className="fs-24 fw-bolder d-block">{tabloData.length}</span>
                                                     </a>
-                                                </div>
-                                                <div className="badge bg-soft-success text-success">
-                                                    <i className="feather-arrow-up fs-10 me-1"></i>
-                                                    <span>36.85%</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -480,34 +478,9 @@ export default function Users() {
                                                         <i className="feather-user-check"></i>
                                                     </div>
                                                     <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">Active Leads</span>
-                                                        <span className="fs-24 fw-bolder d-block">2,245</span>
+                                                        <span className="d-block">Aktif Üye</span>
+                                                        <span className="fs-24 fw-bolder d-block">{aktifUye}</span>
                                                     </a>
-                                                </div>
-                                                <div className="badge bg-soft-danger text-danger">
-                                                    <i className="feather-arrow-down fs-10 me-1"></i>
-                                                    <span>24.56%</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xxl-3 col-md-6">
-                                    <div className="card stretch stretch-full">
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center gap-3">
-                                                    <div className="avatar-text avatar-xl rounded">
-                                                        <i className="feather-user-plus"></i>
-                                                    </div>
-                                                    <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">New Leads</span>
-                                                        <span className="fs-24 fw-bolder d-block">1,254</span>
-                                                    </a>
-                                                </div>
-                                                <div className="badge bg-soft-success text-success">
-                                                    <i className="feather-arrow-up fs-10 me-1"></i>
-                                                    <span>33.29%</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -522,13 +495,26 @@ export default function Users() {
                                                         <i className="feather-user-minus"></i>
                                                     </div>
                                                     <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">Inactive Leads</span>
-                                                        <span className="fs-24 fw-bolder d-block">4,586</span>
+                                                        <span className="d-block">Pasif Üye</span>
+                                                        <span className="fs-24 fw-bolder d-block">{pasifUye}</span>
                                                     </a>
                                                 </div>
-                                                <div className="badge bg-soft-danger text-danger">
-                                                    <i className="feather-arrow-down fs-10 me-1"></i>
-                                                    <span>42.47%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-xxl-3 col-md-6">
+                                    <div className="card stretch stretch-full">
+                                        <div className="card-body">
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <div className="d-flex align-items-center gap-3">
+                                                    <div className="avatar-text avatar-xl rounded">
+                                                        <i className="feather-user-plus"></i>
+                                                    </div>
+                                                    <a href="#;" className="fw-bold d-block">
+                                                        <span className="d-block">Son 1 Haftada Kayıt Olanlar</span>
+                                                        <span className="fs-24 fw-bolder d-block">{sonHaftaKayitlari}</span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

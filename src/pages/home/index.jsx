@@ -1,10 +1,11 @@
 import React from 'react'
 import { useEffect } from 'react';
+import PageHeading from '~/layout/web/component/pageHeading';
 
 export default function Home() {
-    
+
     useEffect(() => {
-        document.title = 'Anasayfa | '+import.meta.env.VITE_PROJECT_NAME;
+        document.title = 'Anasayfa | ' + import.meta.env.VITE_PROJECT_NAME;
     }, []);
 
     return (
@@ -12,12 +13,7 @@ export default function Home() {
             <main className="nxl-container">
                 <div className="nxl-content">
                     <div className="page-header">
-                        <div className="page-header-left d-flex align-items-center">
-                            <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="index.html">Sayfalar</a></li>
-                                <li className="breadcrumb-item">Ana sayfa</li>
-                            </ul>
-                        </div>
+                        <PageHeading />
                         <div className="page-header-right ms-auto">
                             <div className="page-header-right-items">
                                 <div className="d-flex d-md-none">

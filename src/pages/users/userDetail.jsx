@@ -14,7 +14,7 @@ export default function UserDetail() {
 
     const [userDetail, setUserDetail] = useState(null);
     const [parapuanIslem, setParapuanIslem] = useState(null);
-    const [bilparaMiktar, setBilparaMiktar] = useState(0);
+    const [bilparaMiktar, setBilparaMiktar] = useState("");
     const [userStatusChangeDesc, setUserStatusChangeDesc] = useState("")
     const userStatusChangeModalRef = useRef(null);
     const { userId } = useParams();
@@ -104,6 +104,16 @@ export default function UserDetail() {
         )
     }
 
+    const onlyNumber = (event) => {
+        const newValue = event.target.value;
+        // Yalnızca rakamları kabul et
+        if (/^\d*$/.test(newValue)) {
+            setBilparaMiktar(newValue)
+        }else{
+            alertComp("Sadece sayı girebilirsiniz!");
+        }
+    };
+
     const increase = () => {
         setBilparaMiktar(Number(bilparaMiktar) + 1)
     }
@@ -116,45 +126,48 @@ export default function UserDetail() {
         }
     }
 
-    const updateParaPuan = async () => {
+    const updateParaPuan = async (event) => {
+        event.preventDefault();
         try {
             if (parapuanIslem == null) {
                 alertComp("Lütfen işlem seçin!");
-            }
-            if (bilparaMiktar != 0) {
-                const token = localStorage.getItem('token');
-
-                const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/users/updateBilpara', {
-                    invitation_code: userDetail.invitation_code,
-                    process: parapuanIslem,
-                    amount: bilparaMiktar
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setUserDetail(prevUserDetail => ({
-                    ...prevUserDetail,
-                    paraPuan: res.data.paraPuan
-                }));
-
-                setBilparaMiktar(0);
-                setParapuanIslem(null);
-
-                let bilparaIslemleri = document.getElementById('bilparaIslemleri');
-                let bilparaIslemleriModal = bootstrap.Modal.getInstance(bilparaIslemleri)
-                bilparaIslemleriModal.hide();
-
-                if (parapuanIslem == 'ekle') {
-                    successComp(`${userDetail.invitation_code} ID'li kullanıcıya ${bilparaMiktar} bilpara eklendi.`);
-                }
-                if (parapuanIslem == 'cikar') {
-                    successComp(`${userDetail.invitation_code} ID'li kullanıcıdan ${bilparaMiktar} bilpara silindi.`);
-                }
             } else {
-                alertComp("İşlem Miktarı 0 olamaz!");
+                if (bilparaMiktar != 0) {
+                    const token = localStorage.getItem('token');
+
+                    const res = await axios.post(import.meta.env.VITE_API_URL + '/admin/users/updateBilpara', {
+                        invitation_code: userDetail.invitation_code,
+                        process: parapuanIslem,
+                        amount: bilparaMiktar
+                    }, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    setUserDetail(prevUserDetail => ({
+                        ...prevUserDetail,
+                        paraPuan: res.data.paraPuan
+                    }));
+
+                    setBilparaMiktar(0);
+                    setParapuanIslem(null);
+
+                    let bilparaIslemleri = document.getElementById('bilparaIslemleri');
+                    let bilparaIslemleriModal = bootstrap.Modal.getInstance(bilparaIslemleri)
+                    bilparaIslemleriModal.hide();
+
+                    if (parapuanIslem == 'ekle') {
+                        successComp(`${userDetail.invitation_code} ID'li kullanıcıya ${bilparaMiktar} bilpara eklendi.`);
+                    }
+                    if (parapuanIslem == 'cikar') {
+                        successComp(`${userDetail.invitation_code} ID'li kullanıcıdan ${bilparaMiktar} bilpara silindi.`);
+                    }
+                } else {
+                    alertComp("İşlem Miktarı 0 olamaz!");
+                }
             }
+
         } catch (error) {
             if (error.response.data.error) {
                 alertComp(error.response.data.error)
@@ -193,7 +206,8 @@ export default function UserDetail() {
         }
     }
 
-    const userStatusChange = async () => {
+    const userStatusChange = async (event) => {
+        event.preventDefault();
         try {
             if (userStatusChangeDesc != null && userStatusChangeDesc.length > 5) {
                 const token = localStorage.getItem('token');
@@ -216,7 +230,7 @@ export default function UserDetail() {
                 let kullaniciDisableModal = bootstrap.Modal.getInstance(kullaniciDisable)
                 kullaniciDisableModal.hide();
 
-                userStatusChangeDesc("");
+                setUserStatusChangeDesc("");
             } else {
                 alertComp("Gerekçe boş olamaz!")
             }
@@ -599,7 +613,7 @@ export default function UserDetail() {
                                                 <div className="note-description">
                                                     <label className="form-label">İşlem Miktarı (BilPara)</label>
                                                     <div className="input-group">
-                                                        <input type="text" className="form-control" onChange={(event) => { setBilparaMiktar(event.target.value) }} value={bilparaMiktar} />
+                                                        <input type="text" className="form-control" onChange={onlyNumber} value={bilparaMiktar} placeholder='0' />
                                                         <button onClick={decrease} type="button" className="btn btn-outline-secondary">
                                                             -
                                                         </button>
@@ -633,9 +647,7 @@ export default function UserDetail() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="modalTitleId">
-                                {
-                                    userDetail.status == 1 ? ("Kullanıcıyı Pasifleştir") : ("Kullanıcıyı Aktifleştir")
-                                }
+                                { userDetail.status == 1 ? ("Kullanıcıyı Pasifleştir") : ("Kullanıcıyı Aktifleştir") }
                             </h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -654,7 +666,7 @@ export default function UserDetail() {
                                             <div className="col-md-12 mb-3">
                                                 <div className="note-title">
                                                     <label className="form-label">Gerekçe</label>
-                                                    <input type="text" value={userStatusChangeDesc} onChange={(event) => { setUserStatusChangeDesc(event.target.value) }} className="form-control" placeholder="Pasifleştirme sebebini girin" />
+                                                    <input type="text" value={userStatusChangeDesc} onChange={(event) => { setUserStatusChangeDesc(event.target.value) }} className="form-control" placeholder={userDetail.status == 1 ? "Pasifleştirme sebebini girin" : "Aktifleştirme sebebini girin"} />
                                                 </div>
                                             </div>
                                         </div>
