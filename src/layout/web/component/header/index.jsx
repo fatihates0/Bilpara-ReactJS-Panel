@@ -1,15 +1,72 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export default function Header() {
 
-    const { user } = useSelector((state)=>state.auth);
+    const { user } = useSelector((state) => state.auth);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(user);
-    },[])
+    }, [])
+
+    const [isMiniMenu, setIsMiniMenu] = useState(false);
+    const [theme, setTheme] = useState(localStorage.getItem('darkTheme') ? localStorage.getItem('darkTheme') : 'LightTheme');
+
+    //Hamburger Menü Kontrol
+    useEffect(() => {
+        // Component mount edildiğinde localStorage'dan durumu yükle
+        const storedTheme = localStorage.getItem('nexel-classic-dashboard-menu-mini-theme');
+        if (storedTheme === 'menu-mini-theme') {
+            setIsMiniMenu(true);
+            document.documentElement.classList.add('minimenu');
+        }
+    }, []);
+
+    const handleMiniButtonClick = () => {
+        setIsMiniMenu(true);
+        document.documentElement.classList.add('minimenu');
+        localStorage.setItem('nexel-classic-dashboard-menu-mini-theme', 'menu-mini-theme');
+    };
+
+    const handleExpendButtonClick = () => {
+        setIsMiniMenu(false);
+        document.documentElement.classList.remove('minimenu');
+        localStorage.setItem('nexel-classic-dashboard-menu-mini-theme', 'menu-expend-theme');
+    };
+
+    //Dark Mode kontrol
+    useEffect(() => {
+        const storedTheme = localStorage.getItem('darkTheme') || 'LightTheme';
+        setTheme(storedTheme);
+    }, []);
+
+    useEffect(() => {
+        if (theme === 'darkTheme') {
+            document.documentElement.classList.add('darkTheme');
+        } else {
+            document.documentElement.classList.remove('darkTheme');
+        }
+        localStorage.setItem('darkTheme', theme);
+    }, [theme]);
+
+    const handleDarkMode = (e) => {
+        e.preventDefault();
+        setTheme('darkTheme');
+    };
+
+    const handleLightMode = (e) => {
+        e.preventDefault();
+        setTheme('LightTheme');
+    };
+
+    const resetTheme = (e) => {
+        e.preventDefault();
+        setTheme('LightTheme');
+        localStorage.removeItem('darkTheme');
+        window.location.reload(true);
+    };
 
     return (
         <header className="nxl-header">
@@ -21,8 +78,11 @@ export default function Header() {
                         </div>
                     </a>
                     <div className="nxl-navigation-toggle">
-                        <a href="#" id="menu-mini-button"> <i className="feather-align-left"></i> </a> <a href="#" id="menu-expend-button" style={{ display: 'none' }}> <i className="feather-arrow-right"></i> </a>
+                        <a href="#" id="menu-expend-button" onClick={handleExpendButtonClick} style={{ display: isMiniMenu ? 'inline-block' : 'none' }}> <i className="feather-arrow-right"></i> </a> 
+                        <a href="#" id="menu-mini-button" onClick={handleMiniButtonClick} style={{ display: isMiniMenu ? 'none' : 'inline-block' }}> <i className="feather-align-left"></i> </a>
                     </div>
+
+
                     <div className="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
                         <a href="#" id="nxl-lavel-mega-menu-open"> <i className="feather-align-left"></i> </a>
                     </div>
@@ -61,9 +121,14 @@ export default function Header() {
                             </div>
                         </div>
                         <div className="nxl-h-item dark-light-theme">
-                            <a href="#" className="nxl-head-link me-0 dark-button"> <i className="feather-moon"></i> </a>
-                            <a href="#" className="nxl-head-link me-0 light-button" style={{ display: 'none' }}> <i className="feather-sun"></i> </a>
+                            <a href="#" className={`dark-button ${theme === 'darkTheme' ? 'active' : ''} nxl-head-link me-0`} onClick={handleDarkMode} style={{ display: theme === 'darkTheme' ? 'none' : 'inline-block' }}>
+                                <i className="feather-moon"></i>
+                            </a>
+                            <a href="#" className={`light-button ${theme === 'LightTheme' ? 'active' : ''} nxl-head-link me-0`} onClick={handleLightMode} style={{ display: theme === 'LightTheme' ? 'none' : 'inline-block' }}>
+                                <i className="feather-sun"></i>
+                            </a>
                         </div>
+
                         <div className="dropdown nxl-h-item">
                             <a className="nxl-head-link me-3" data-bs-toggle="dropdown" href="#" role="button" data-bs-auto-close="outside"> <i className="feather-bell"></i> <span className="badge bg-danger nxl-h-badge">1</span> </a>
                             <div className="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-notifications-menu">
