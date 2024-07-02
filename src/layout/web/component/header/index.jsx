@@ -1,7 +1,8 @@
-import React from 'react'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import "core-js/stable"
+import "regenerator-runtime/runtime"
 
 export default function Header() {
 
@@ -61,13 +62,6 @@ export default function Header() {
         setTheme('LightTheme');
     };
 
-    const resetTheme = (e) => {
-        e.preventDefault();
-        setTheme('LightTheme');
-        localStorage.removeItem('darkTheme');
-        window.location.reload(true);
-    };
-
     return (
         <header className="nxl-header">
             <div className="header-wrapper">
@@ -78,7 +72,7 @@ export default function Header() {
                         </div>
                     </a>
                     <div className="nxl-navigation-toggle">
-                        <a href="#" id="menu-expend-button" onClick={handleExpendButtonClick} style={{ display: isMiniMenu ? 'inline-block' : 'none' }}> <i className="feather-arrow-right"></i> </a> 
+                        <a href="#" id="menu-expend-button" onClick={handleExpendButtonClick} style={{ display: isMiniMenu ? 'inline-block' : 'none' }}> <i className="feather-arrow-right"></i> </a>
                         <a href="#" id="menu-mini-button" onClick={handleMiniButtonClick} style={{ display: isMiniMenu ? 'none' : 'inline-block' }}> <i className="feather-align-left"></i> </a>
                     </div>
 

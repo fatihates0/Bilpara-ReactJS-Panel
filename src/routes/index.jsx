@@ -8,6 +8,8 @@ import Logout from "~/pages/auth/logout";
 import PrivateRoot from "~/pages/auth/privateRoot";
 import Home from "~/pages/home";
 import Notifications from "~/pages/notification";
+import Products from "~/pages/products";
+import ProductDetail from "~/pages/products/productDetail";
 import Sorular from "~/pages/questions";
 import Users from "~/pages/users";
 import UserDetail from "~/pages/users/userDetail";
@@ -30,6 +32,10 @@ export default function GeneralRoute() {
                     <Route path="/users">
                         <Route index={true} element={<Users />} />
                         <Route path=":userId" element={<UserDetail />} />
+                    </Route>
+                    <Route path="/products">
+                        <Route index={true} element={<Products />} />
+                        <Route path=":productId" element={<ProductDetail />} />
                     </Route>
                     <Route path="questions" element={<Sorular />} />
                     <Route path="questions/:search_key/:page?/:page_size?" element={<Sorular />} />

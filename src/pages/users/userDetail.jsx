@@ -1,14 +1,15 @@
 import axios from 'axios';
-import { error } from 'jquery';
 import moment from 'moment';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { setLoading } from '~/redux/slices/generalSlice';
 
 export default function UserDetail() {
 
@@ -18,6 +19,7 @@ export default function UserDetail() {
     const [userStatusChangeDesc, setUserStatusChangeDesc] = useState("")
     const userStatusChangeModalRef = useRef(null);
     const { userId } = useParams();
+    const dispatch = useDispatch();
 
     const [bakiyeSifirlaDesc, setBakiyeSifirlaDesc] = useState('Selam')
 
@@ -80,6 +82,7 @@ export default function UserDetail() {
     }, []);
 
     const fetchUserDetail = async () => {
+        dispatch(setLoading(true));
         try {
             const token = localStorage.getItem('token');
 
@@ -92,8 +95,10 @@ export default function UserDetail() {
             });
 
             setUserDetail(res.data.userDetail)
+            dispatch(setLoading(false));
 
         } catch (error) {
+            dispatch(setLoading(false));
             console.log(error);
         }
     }
@@ -109,7 +114,7 @@ export default function UserDetail() {
         // Yalnızca rakamları kabul et
         if (/^\d*$/.test(newValue)) {
             setBilparaMiktar(newValue)
-        }else{
+        } else {
             alertComp("Sadece sayı girebilirsiniz!");
         }
     };
@@ -647,7 +652,7 @@ export default function UserDetail() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="modalTitleId">
-                                { userDetail.status == 1 ? ("Kullanıcıyı Pasifleştir") : ("Kullanıcıyı Aktifleştir") }
+                                {userDetail.status == 1 ? ("Kullanıcıyı Pasifleştir") : ("Kullanıcıyı Aktifleştir")}
                             </h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -689,7 +694,6 @@ export default function UserDetail() {
                                 }
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

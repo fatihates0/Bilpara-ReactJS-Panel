@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -104,124 +103,49 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     </>
 );
 
-
-
-/*const columns = [
-    {
-        name: 'ID',
-        selector: row => row.id,
-    }, {
-        name: 'Title',
-        selector: row => row.title,
-    },
-    {
-        name: 'Year',
-        selector: row => row.year,
-    },
-    {
-        name: 'Edit',
-        right: true,
-        selector: row => (
-            <div className="hstack gap-2 justify-content-end">
-                <a href="leads-view.html" className="avatar-text avatar-md">
-                    <i className="feather feather-eye"></i>
-                </a>
-                <a href="leads-view.html" className="avatar-text avatar-md">
-                    <i className="feather feather-edit"></i>
-                </a>
-            </div>
-        ),
-    },
-];*/
-
 const columns = [
     {
         name: 'ID',
-        selector: row => row.invitation_code,
+        selector: row => row.id,
+        grow: 0.1
     },
     {
-        name: 'Name Surname',
-        selector: row => row.name,
-        right: false,
+        name: 'Ürün Başlığı',
+        selector: row => row.title,
     },
     {
-        name: 'Email',
-        selector: row => row.email,
-    },
-    /*{
-        name: 'BilPara Puan',
-        selector: row => row.paraPuan,
-        grow:0.1,
-        conditionalCellStyles: [
-            {
-                when: row => row.paraPuan < 5,
-                style: {
-                    textAlign: 'center',
-                    backgroundColor: 'rgba(63, 195, 128, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                },
-            },
-            {
-                when: row => row.paraPuan >= 5 && row.paraPuan < 45,
-                style: {
-                    backgroundColor: 'rgba(248, 148, 6, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                },
-            },
-            {
-                when: row => row.paraPuan >= 45,
-                style: {
-                    backgroundColor: 'rgba(242, 38, 19, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'not-allowed',
-                    },
-                },
-            },
-        ],
-    },*/
-    {
-        name: 'Provider',
-        selector: row => row.provider,
+        name: 'Kategori',
+        selector: row => row.category,
     },
     {
-        name: 'BilPara Puan',
-        selector: row => row.paraPuan,
-        sortable: true,
+        name: 'Fiyatı',
+        selector: row => row.price,
     },
     {
-        name: 'Kayıt Tarihi',
-        selector: row => moment(row.created_at).format('DD/MM/YYYY HH:mm'),
-        sortable: true,
+        name: 'Stok',
+        selector: row => row.price,
     },
     {
-        name: 'Edit',
+        name: 'İşlem',
         selector: row => (
             <div className="hstack gap-2 justify-content-end">
-                <Link to={"/users/" + row.invitation_code} className="avatar-text avatar-md"><i className="feather feather-eye"></i></Link>
+                <Link to={"/products/" + row.id} className="avatar-text avatar-md"><i className="feather feather-eye"></i></Link>
             </div>
         ),
     },
 ];
 
-export default function Users() {
+export default function Products() {
 
     const [theme, setTheme] = useState(null);
     const [tabloData, setTabloData] = useState(null);
     const [aktifUye, setAktifUye] = useState(0);
     const [pasifUye, setPasifUye] = useState(0);
-    const [sonHaftaKayitlari, setSetsonHaftaKayitlari] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setLoading(true));
-        document.title = 'Kullanıcılar | ' + import.meta.env.VITE_PROJECT_NAME;
+        document.title = 'Ürünler | ' + import.meta.env.VITE_PROJECT_NAME;
         setTheme(localStorage.getItem('darkTheme'))
     }, []);
 
@@ -232,24 +156,15 @@ export default function Users() {
             try {
                 const token = localStorage.getItem('token');
 
-                const res = await axios.post(import.meta.env.VITE_API_URL + "/admin/users", {}, {
+                const res = await axios.post(import.meta.env.VITE_API_URL + "/admin/products", {}, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
 
-                console.log(res.data.users);
+                console.log(res.data.products);
 
-                setTabloData(res.data.users);
-
-                const oneWeekAgo = await moment().subtract(1, 'weeks');
-
-                const sonHafta = await res.data.users.filter(item => {
-                    const createdAt = moment(item.created_at);
-                    return createdAt.isAfter(oneWeekAgo);
-                });
-
-                setSetsonHaftaKayitlari(sonHafta.length);
+                setTabloData(res.data.products);
 
                 const aktifUye = res.data.users.filter(item => item.status === 1);
 
@@ -263,9 +178,6 @@ export default function Users() {
                 console.log(error);
                 dispatch(setLoading(false))
             }
-
-
-
 
         }
         fun();
@@ -301,9 +213,8 @@ export default function Users() {
 
 
     const filteredItems = tabloData.filter(item =>
-        (item.name && item.name.toLowerCase().includes(filterText.toLowerCase())) ||
-        (item.invitation_code && item.invitation_code.toLowerCase().includes(filterText.toLowerCase())) ||
-        (item.email && item.email.toLowerCase().includes(filterText.toLowerCase()))
+        (item.title && item.title.toLowerCase().includes(filterText.toLowerCase())) ||
+        (item.category && item.category.toLowerCase().includes(filterText.toLowerCase()))
     );
 
     const customStyles = {
@@ -333,7 +244,7 @@ export default function Users() {
 
     const handleRowClicked = row => {
 
-        console.log(`${row.invitation_code} was clicked!`);
+        console.log(`${row.id} was clicked!`);
     };
 
     return (
@@ -341,7 +252,7 @@ export default function Users() {
             <main className="nxl-container">
                 <div className="nxl-content">
                     <div className="page-header">
-                        <PageHeading title="Kullanıcılar" />
+                        <PageHeading title="Ürünler" />
                         <div className="page-header-right ms-auto">
                             <div className="page-header-right-items">
                                 <div className="d-flex d-md-none">
@@ -506,8 +417,8 @@ export default function Users() {
                                                         <i className="feather-user-plus"></i>
                                                     </div>
                                                     <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">Son 1 Haftada Kayıt Olanlar</span>
-                                                        <span className="fs-24 fw-bolder d-block">{sonHaftaKayitlari}</span>
+                                                        <span className="d-block">---</span>
+                                                        <span className="fs-24 fw-bolder d-block">---</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -524,7 +435,7 @@ export default function Users() {
                                     <div className="card-body p-0">
                                         <div className="table-responsive">
                                             <DataTable
-                                                title="Kullanıcı Listesi"
+                                                title="Ürün Listesi"
                                                 theme={theme}
                                                 columns={columns}
                                                 data={filteredItems}

@@ -31,17 +31,17 @@ export default function Sidebar() {
                             </Link>
                         </li>
                         <li className="nxl-item nxl-hasmenu">
-                            <Link to="/users" className="nxl-link">
+                            <Link to="/products" className="nxl-link">
                                 <span className="nxl-micon"><i className="feather-archive"></i></span> <span className="nxl-mtext">Ürün Yönetimi</span>
                             </Link>
                         </li>
                         <li className="nxl-item nxl-hasmenu">
-                            <Link to="/users" className="nxl-link">
+                            <Link to="/" className="nxl-link">
                                 <span className="nxl-micon"><i className="feather-shopping-bag"></i></span> <span className="nxl-mtext">Sipariş Yönetimi</span>
                             </Link>
                         </li>
                         <li className="nxl-item nxl-hasmenu">
-                            <Link to="/users" className="nxl-link">
+                            <Link to="/" className="nxl-link">
                                 <span className="nxl-micon"><i className="feather-activity"></i></span> <span className="nxl-mtext">Destek Portalı</span>
                             </Link>
                         </li>
