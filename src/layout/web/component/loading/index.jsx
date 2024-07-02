@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import Lottie from 'react-lottie';
-import LoadingLottie from '../../../../../public/assets/lotties/loading.json'
+import LoadingLottie from '../../../../assets/lotties/loading.json'
 export default function LoadingComponent() {
     const { loading } = useSelector((state) => state.general);
 
