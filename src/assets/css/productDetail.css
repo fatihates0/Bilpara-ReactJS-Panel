@@ -1,0 +1,41 @@
+#productImage:fullscreen {
+    padding: 50px;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: ease-in 100ms;
+    transition: ease-out 100ms;
+  }
+
+  /* src/styles.css */
+
+/* Normal stil */
+img {
+    width: 300px;
+    cursor: pointer;
+}
+
+/* Tam ekran stili */
+img:fullscreen {
+    width: 100%;
+    height: 100%;
+}
+
+/* Tarayıcıya özgü tam ekran stilleri */
+img:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+}
+
+img:-moz-full-screen {
+    width: 100%;
+    height: 100%;
+}
+
+img:-ms-fullscreen {
+    width: 100%;
+    height: 100%;
+}
+
+img:full-screen {
+    width: 100%;
+    height: 100%;
+}

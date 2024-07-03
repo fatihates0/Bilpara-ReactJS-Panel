@@ -139,8 +139,6 @@ export default function Products() {
 
     const [theme, setTheme] = useState(null);
     const [tabloData, setTabloData] = useState(null);
-    const [aktifUye, setAktifUye] = useState(0);
-    const [pasifUye, setPasifUye] = useState(0);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -165,12 +163,6 @@ export default function Products() {
                 console.log(res.data.products);
 
                 setTabloData(res.data.products);
-
-                const aktifUye = res.data.users.filter(item => item.status === 1);
-
-                setAktifUye(aktifUye.length);
-
-                setPasifUye(res.data.users.length - aktifUye.length);
 
                 dispatch(setLoading(false))
 
@@ -253,180 +245,6 @@ export default function Products() {
                 <div className="nxl-content">
                     <div className="page-header">
                         <PageHeading title="Ürünler" />
-                        <div className="page-header-right ms-auto">
-                            <div className="page-header-right-items">
-                                <div className="d-flex d-md-none">
-                                    <a href="#" className="page-header-right-close-toggle">
-                                        <i className="feather-arrow-left me-2"></i>
-                                        <span>Back</span>
-                                    </a>
-                                </div>
-                                <div className="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                                    <a href="#;" className="btn btn-icon btn-light-brand" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                        <i className="feather-bar-chart"></i>
-                                    </a>
-                                    <div className="dropdown">
-                                        <a className="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10" data-bs-auto-close="outside">
-                                            <i className="feather-filter"></i>
-                                        </a>
-                                        <div className="dropdown-menu dropdown-menu-end">
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-primary rounded-circle d-inline-block me-3"></span>
-                                                <span>New</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-warning rounded-circle d-inline-block me-3"></span>
-                                                <span>Working</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-success rounded-circle d-inline-block me-3"></span>
-                                                <span>Qualified</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-danger rounded-circle d-inline-block me-3"></span>
-                                                <span>Declined</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-teal rounded-circle d-inline-block me-3"></span>
-                                                <span>Customer</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-indigo rounded-circle d-inline-block me-3"></span>
-                                                <span>Contacted</span>
-                                            </a>
-                                            <div className="dropdown-divider"></div>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-warning rounded-circle d-inline-block me-3"></span>
-                                                <span>Pending</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-success rounded-circle d-inline-block me-3"></span>
-                                                <span>Approved</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <span className="wd-7 ht-7 bg-teal rounded-circle d-inline-block me-3"></span>
-                                                <span>In Progress</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div className="dropdown">
-                                        <a className="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10" data-bs-auto-close="outside">
-                                            <i className="feather-paperclip"></i>
-                                        </a>
-                                        <div className="dropdown-menu dropdown-menu-end">
-                                            <a href="#;" className="dropdown-item">
-                                                <i className="bi bi-filetype-pdf me-3"></i>
-                                                <span>PDF</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <i className="bi bi-filetype-csv me-3"></i>
-                                                <span>CSV</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <i className="bi bi-filetype-xml me-3"></i>
-                                                <span>XML</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <i className="bi bi-filetype-txt me-3"></i>
-                                                <span>Text</span>
-                                            </a>
-                                            <a href="#;" className="dropdown-item">
-                                                <i className="bi bi-filetype-exe me-3"></i>
-                                                <span>Excel</span>
-                                            </a>
-                                            <div className="dropdown-divider"></div>
-                                            <a href="#;" className="dropdown-item">
-                                                <i className="bi bi-printer me-3"></i>
-                                                <span>Print</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <a href="leads-create.html" className="btn btn-primary">
-                                        <i className="feather-plus me-2"></i>
-                                        <span>Create Lead</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="d-md-none d-flex align-items-center">
-                                <a href="#" className="page-header-right-open-toggle">
-                                    <i className="feather-align-right fs-20"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="collapseOne" className="accordion-collapse collapse page-header-collapse">
-                        <div className="accordion-body pb-2">
-                            <div className="row">
-                                <div className="col-xxl-3 col-md-6">
-                                    <div className="card stretch stretch-full">
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center gap-3">
-                                                    <div className="avatar-text avatar-xl rounded">
-                                                        <i className="feather-users"></i>
-                                                    </div>
-                                                    <a href="#" className="fw-bold d-block">
-                                                        <span className="d-block">Toplam Üye</span>
-                                                        <span className="fs-24 fw-bolder d-block">{tabloData.length}</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xxl-3 col-md-6">
-                                    <div className="card stretch stretch-full">
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center gap-3">
-                                                    <div className="avatar-text avatar-xl rounded">
-                                                        <i className="feather-user-check"></i>
-                                                    </div>
-                                                    <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">Aktif Üye</span>
-                                                        <span className="fs-24 fw-bolder d-block">{aktifUye}</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xxl-3 col-md-6">
-                                    <div className="card stretch stretch-full">
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center gap-3">
-                                                    <div className="avatar-text avatar-xl rounded">
-                                                        <i className="feather-user-minus"></i>
-                                                    </div>
-                                                    <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">Pasif Üye</span>
-                                                        <span className="fs-24 fw-bolder d-block">{pasifUye}</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xxl-3 col-md-6">
-                                    <div className="card stretch stretch-full">
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <div className="d-flex align-items-center gap-3">
-                                                    <div className="avatar-text avatar-xl rounded">
-                                                        <i className="feather-user-plus"></i>
-                                                    </div>
-                                                    <a href="#;" className="fw-bold d-block">
-                                                        <span className="d-block">---</span>
-                                                        <span className="fs-24 fw-bolder d-block">---</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div className="main-content">
                         <div className="row">

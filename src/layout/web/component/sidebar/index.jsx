@@ -1,5 +1,6 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
+import LogoFull from '../../../../../public/assets/images/logo-full.png'
+import LogoAbbr from '../../../../../public/assets/images/logo-abbr.png'
 
 export default function Sidebar() {
     return (
@@ -7,8 +8,8 @@ export default function Sidebar() {
             <div className="navbar-wrapper">
                 <div className="m-header">
                     <Link to="/" className="b-brand">
-                        <img src="assets/images/logo-full.png" style={{width:'70%'}} alt="" className="logo logo-lg" />
-                        <img src="assets/images/logo-abbr.png" alt="" className="logo logo-sm" />
+                        <img src={LogoFull} style={{width:'70%'}} alt="" className="logo logo-lg" />
+                        <img src={LogoAbbr} alt="" className="logo logo-sm" />
                     </Link>
                 </div>
                 <div className="navbar-content">
