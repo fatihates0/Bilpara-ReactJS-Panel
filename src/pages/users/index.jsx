@@ -105,35 +105,6 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 
-
-/*const columns = [
-    {
-        name: 'ID',
-        selector: row => row.id,
-    }, {
-        name: 'Title',
-        selector: row => row.title,
-    },
-    {
-        name: 'Year',
-        selector: row => row.year,
-    },
-    {
-        name: 'Edit',
-        right: true,
-        selector: row => (
-            <div className="hstack gap-2 justify-content-end">
-                <a href="leads-view.html" className="avatar-text avatar-md">
-                    <i className="feather feather-eye"></i>
-                </a>
-                <a href="leads-view.html" className="avatar-text avatar-md">
-                    <i className="feather feather-edit"></i>
-                </a>
-            </div>
-        ),
-    },
-];*/
-
 const columns = [
     {
         name: 'ID',
@@ -142,50 +113,11 @@ const columns = [
     {
         name: 'Name Surname',
         selector: row => row.name,
-        right: false,
     },
     {
         name: 'Email',
         selector: row => row.email,
     },
-    /*{
-        name: 'BilPara Puan',
-        selector: row => row.paraPuan,
-        grow:0.1,
-        conditionalCellStyles: [
-            {
-                when: row => row.paraPuan < 5,
-                style: {
-                    textAlign: 'center',
-                    backgroundColor: 'rgba(63, 195, 128, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                },
-            },
-            {
-                when: row => row.paraPuan >= 5 && row.paraPuan < 45,
-                style: {
-                    backgroundColor: 'rgba(248, 148, 6, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'pointer',
-                    },
-                },
-            },
-            {
-                when: row => row.paraPuan >= 45,
-                style: {
-                    backgroundColor: 'rgba(242, 38, 19, 0.9)',
-                    color: 'white',
-                    '&:hover': {
-                        cursor: 'not-allowed',
-                    },
-                },
-            },
-        ],
-    },*/
     {
         name: 'Provider',
         selector: row => row.provider,

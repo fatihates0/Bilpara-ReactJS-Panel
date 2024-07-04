@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,7 +16,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import { useRef } from "react";
 
 
 export default function ProductDetail() {
@@ -23,7 +23,7 @@ export default function ProductDetail() {
     const [theme, setTheme] = useState("");
     const [productDetail, setProductDetail] = useState({});
     const [productCategorys, setProductCategorys] = useState([]);
-    const [productImage, setProductImage] = useState('');
+    const [productImage, setProductImage] = useState("");
     const [isFullscreen, setIsFullscreen] = useState(false);
     const imgRef = useRef(null);
     const dispatch = useDispatch();
@@ -34,7 +34,6 @@ export default function ProductDetail() {
     }, []);
 
     const handleFileChange = (event) => {
-        console.log(event.target.files);
         if (event.target.files.length > 0) {
             setProductImage(event.target.files[0]);
         } else {
@@ -59,14 +58,11 @@ export default function ProductDetail() {
                 }
             });
 
-            console.log(res.data.product);
-
             setProductDetail(res.data.product)
 
             //Kategorileri select'e ata
 
             const options = res.data.category.map(category => {
-                console.log(category);
                 return {
                     value: category,
                     label: category,
@@ -101,8 +97,6 @@ export default function ProductDetail() {
                 }
             });
 
-            console.log(res);
-
             setProductDetail({
                 ...productDetail,
                 image: res.data.image
@@ -136,7 +130,7 @@ export default function ProductDetail() {
         }
     };
 
-    if (!theme) {
+    if (!theme && !productDetail) {
         return (
             <div>Selam</div>
         )
@@ -294,7 +288,7 @@ export default function ProductDetail() {
                                                             type="text"
                                                             className="form-control"
                                                             placeholder='Ürün Başlığı Girin'
-                                                            value={productDetail.title}
+                                                            value={productDetail.title || ''}
                                                             onChange={(event) => {
                                                                 setProductDetail({
                                                                     ...productDetail,
@@ -305,6 +299,7 @@ export default function ProductDetail() {
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div className="col-md-12 mb-3">
                                                 <div className="note-description">
                                                     <label className="form-label">Ürün Bilpara Fiyatı</label>
@@ -313,7 +308,7 @@ export default function ProductDetail() {
                                                             type="number"
                                                             className="form-control"
                                                             placeholder='Ürün Bilpara Fiyatını Girin'
-                                                            value={productDetail.price}
+                                                            value={productDetail.price || ""}
                                                             onChange={(event) => {
                                                                 setProductDetail({
                                                                     ...productDetail,
@@ -332,12 +327,13 @@ export default function ProductDetail() {
                                                         productDetail.category && (
                                                             <Box sx={{ minWidth: 120 }}>
                                                                 <FormControl fullWidth>
-                                                                    <InputLabel id="demo-simple-select-label">Kategori Seçin</InputLabel>
+                                                                    <InputLabel style={{ color: theme == 'darkTheme' ? '#fff' : '#283c50' }} id="demo-simple-select-label">Kategori Seçin</InputLabel>
                                                                     <Select
                                                                         labelId="demo-simple-select-label"
                                                                         id="demo-simple-select"
-                                                                        value={productDetail.category}
+                                                                        value={productDetail.category || ""}
                                                                         label="Kategori Seçin"
+                                                                        style={{ color: theme == 'darkTheme' ? 'white' : 'black', border: theme == 'darkTheme' && '1px solid #1b2436' }}
                                                                         onChange={(event) => {
                                                                             setProductDetail({
                                                                                 ...productDetail,
@@ -389,10 +385,6 @@ export default function ProductDetail() {
                                                 </div>
                                             </div>
 
-
-
-
-
                                             <div className="col-md-12 mb-3">
                                                 <div className="note-title">
                                                     <label className="form-label">Markette listelensin mi?</label>
@@ -436,6 +428,7 @@ export default function ProductDetail() {
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </form>
                                 </div>
