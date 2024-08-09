@@ -9,6 +9,13 @@ import styled from 'styled-components';
 import PageHeading from '~/layout/web/component/pageHeading';
 import { setLoading } from '~/redux/slices/generalSlice';
 
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+
 const TextField = styled.input`
     height: 36px;
     width: 200px;
@@ -140,6 +147,8 @@ export default function Products() {
     const [theme, setTheme] = useState(null);
     const [tabloData, setTabloData] = useState(null);
     const dispatch = useDispatch();
+    const [productDetail, setProductDetail] = useState({status:1});
+    const [productImage, setProductImage] = useState("");
 
     useEffect(() => {
         dispatch(setLoading(true));
@@ -239,13 +248,45 @@ export default function Products() {
         console.log(`${row.id} was clicked!`);
     };
 
+    const addProductHandle = () => {
+        console.log('====================================');
+        console.log(productDetail);
+        console.log(productImage);
+        console.log('====================================');
+    }
+
+    const handleFileChange = (event) => {
+        if (event.target.files.length > 0) {
+            setProductImage(event.target.files[0]);
+        } else {
+            setProductImage(null);
+        }
+    };
+
     return (
         <>
             <main className="nxl-container">
                 <div className="nxl-content">
                     <div className="page-header">
                         <PageHeading title="Ürünler" />
+                        <div className="page-header-right ms-auto">
+                            <div className="page-header-right-items">
+                                <div className="d-flex d-md-none">
+                                    <a href="javascript:void(0)" className="page-header-right-close-toggle">
+                                        <i className="feather-arrow-left me-2"></i>
+                                        <span>Back</span>
+                                    </a>
+                                </div>
+                                <div className="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                                    <a href="leads-create.html" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productEdit">
+                                        <i className="feather-plus me-2"></i>
+                                        <span>Yeni Ürün Ekle</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div className="main-content">
                         <div className="row">
                             <div className="col-lg-12">
@@ -276,6 +317,200 @@ export default function Products() {
                     </div>
                 </div>
             </main>
+            <div className="modal fade" id="productEdit" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="modalTitleId">Ürün Ekle</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="notes-box">
+                                <div className="notes-content">
+                                    <form onSubmit={addProductHandle} autoComplete='off'>
+                                        <div className="row">
+
+                                        <div className="col-md-12 mb-3">
+                                                <div className="note-description">
+                                                    <label className="form-label">Ürün Başlığı</label>
+                                                    <div className="input-group">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder='Ürün Başlığı Girin'
+                                                            value={productDetail.title || ''}
+                                                            onChange={(event) => {
+                                                                setProductDetail({
+                                                                    ...productDetail,
+                                                                    title: event.target.value
+                                                                });
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-12 mb-3">
+                                                <div className="note-description">
+                                                    <label className="form-label">Ürün Başlığı</label>
+                                                    <div className="input-group">
+                                                        <textarea
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder='Ürün Açıklamasını Girin'
+                                                            value={productDetail.description || ''}
+                                                            onChange={(event) => {
+                                                                setProductDetail({
+                                                                    ...productDetail,
+                                                                    description: event.target.value
+                                                                });
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-12 mb-3">
+                                                <div className="note-description">
+                                                    <label className="form-label">Ürün Bilpara Fiyatı</label>
+                                                    <div className="input-group">
+                                                        <input
+                                                            type="number"
+                                                            className="form-control"
+                                                            placeholder='Ürün Bilpara Fiyatını Girin'
+                                                            value={productDetail.price || ""}
+                                                            onChange={(event) => {
+                                                                setProductDetail({
+                                                                    ...productDetail,
+                                                                    price: event.target.value
+                                                                });
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-12 mb-3">
+                                                <div className="note-description">
+
+                                                    {
+                                                        productDetail.category && (
+                                                            <Box sx={{ minWidth: 120 }}>
+                                                                <FormControl fullWidth>
+                                                                    <InputLabel style={{ color: theme == 'darkTheme' ? '#fff' : '#283c50' }} id="demo-simple-select-label">Kategori Seçin</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-label"
+                                                                        id="demo-simple-select"
+                                                                        value={productDetail.category || ""}
+                                                                        label="Kategori Seçin"
+                                                                        style={{ color: theme == 'darkTheme' ? 'white' : 'black', border: theme == 'darkTheme' && '1px solid #1b2436' }}
+                                                                        onChange={(event) => {
+                                                                            setProductDetail({
+                                                                                ...productDetail,
+                                                                                category: event.target.value
+                                                                            });
+                                                                        }}
+
+                                                                    >
+                                                                        {productCategorys.map((option) => (
+                                                                            <MenuItem key={option.value} value={option.value}>
+                                                                                {option.label}
+                                                                            </MenuItem>
+                                                                        ))}
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Box>
+                                                        )
+                                                    }
+
+
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-12 mb-3">
+                                                <div className="note-description">
+                                                    <label className="form-label">Görseli Değiştirin</label>
+                                                    <div className="form-check" htmlFor="changeImage">
+                                                        <Button
+                                                            id="changeImage"
+                                                            component="label"
+                                                            role={undefined}
+                                                            variant="contained"
+                                                            tabIndex={-1}
+                                                        >
+                                                            {
+                                                                productImage ? (
+                                                                    productImage.name.length > 20 ? productImage.name.substring(0, 30) + '...' : productImage.name
+                                                                ) : (
+                                                                    'Dosya Seçin'
+                                                                )
+                                                            }
+                                                            <input
+                                                                type="file"
+                                                                hidden
+                                                                onChange={handleFileChange}
+                                                            />
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-12 mb-3">
+                                                <div className="note-title">
+                                                    <label className="form-label">Markette listelensin mi?</label>
+                                                    <div className="form-check">
+                                                        <input
+                                                            onChange={(event) => {
+                                                                setProductDetail({
+                                                                    ...productDetail,
+                                                                    status: Number(event.target.value)
+                                                                });
+                                                            }}
+                                                            className="form-check-input"
+                                                            name='status'
+                                                            type="radio"
+                                                            value="1"
+                                                            id="aktif"
+                                                            checked={productDetail.status == 1 && true}
+                                                        />
+                                                        <label className="form-check-label" htmlFor="aktif">
+                                                            Aktif
+                                                        </label>
+                                                    </div>
+                                                    <div className="form-check">
+                                                        <input
+                                                            onChange={(event) => {
+                                                                setProductDetail({
+                                                                    ...productDetail,
+                                                                    status: Number(event.target.value)
+                                                                });
+                                                            }}
+                                                            className="form-check-input"
+                                                            name='status'
+                                                            type="radio"
+                                                            value="0"
+                                                            id="pasif"
+                                                            checked={productDetail.status == 0 && true}
+                                                        />
+                                                        <label className="form-check-label" htmlFor="pasif">
+                                                            Pasif
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="modal-footer justify-content-between">
+                            <button className="btn btn-primary" data-bs-dismiss="modal">İptal</button>
+                            <button onClick={addProductHandle} type="submit" id="btn-n-add" className="btn btn-success">Güncelle</button>
+                        </div>
+                    </div>
+                </div >
+            </div >
         </>
     )
 }
